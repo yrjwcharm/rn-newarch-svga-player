@@ -1,4 +1,4 @@
-## **这是一款使用 ReactNative 加载`Android/iOS` Svga 动画的 Fabric 新架构播放器插件**
+## **这是一款使用 ReactNative 加载 Svga 动画的新架构支持开源插件**
 
 > ### 版本：latest
 

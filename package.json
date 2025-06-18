@@ -42,18 +42,18 @@
   ],
   "license": "ISC",
   "main": "index.tsx",
-  "name": "@yrjwcharm/react-native-svga-player",
+  "name": "rn-newarch-svga-player",
   "peerDependencies": {
     "react": "*",
     "react-native": "*"
   },
-  "homepage": "https://github.com/yrjwcharm/react-native-svga-player#readme",
+  "homepage": "https://github.com/yrjwcharm/rn-newarch-svga-player#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yrjwcharm/react-native-svga-player.git"
+    "url": "git+https://github.com/yrjwcharm/rn-newarch-svga-player.git"
   },
   "scripts": {
     "codegen-lib": "react-native codegen-lib-harmony --no-safety-check --npm-package-name react-native-ohos-svgaplayer --cpp-output-path ../../harmony/svgaplayer/src/main/cpp/generated --ets-output-path ../../harmony/svgaplayer/src/main/ets/generated --turbo-modules-spec-paths ./src  --arkts-components-spec-paths ./src"
   },
-  "version": "1.0.0"
+  "version": "1.0.2"
 }
