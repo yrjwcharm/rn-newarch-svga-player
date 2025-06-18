@@ -82,4 +82,4 @@ const styles = StyleSheet.create({
 
 本项目基于 [The MIT License (MIT)](https://github.com/yrjwcharm/react-native-ohos-svgaplayer/blob/master/LICENSE) ，请自由地享受和参与开源。
 
-### demo 示例请查阅<https://github.com/yrjwcharm/react-native-newarch-support>
+#### demo 示例请查看 <https://github.com/yrjwcharm/react-native-newarch-support>
