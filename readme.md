@@ -15,7 +15,7 @@
 
 ## 安装与使用
 
-> [!TIP] 注意 ⚠️ 本库安卓/ios 只采用新架构 Fabric 支持，旧架构不在支持
+> [!TIP] 注意 ⚠️ 本库 android/ios 仅给予 Fabric 新架构 支持，旧架构不在跟进，若需就架构支持请移步<https://github.com/yrjwcharm/react-native-svga-player>
 
 #### **npm**
 
