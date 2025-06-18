@@ -15,7 +15,7 @@
 
 ## 安装与使用
 
-> [!TIP] 注意 ⚠️ 本库 android/ios 仅给予 Fabric 新架构 支持，旧架构不在跟进，若需就架构支持请移步<https://github.com/yrjwcharm/react-native-svga-player>
+> [!TIP] 注意 ⚠️ 本库 android/ios 仅给予 Fabric 新架构 支持，旧架构不在跟进，若需旧架构支持请移步<https://github.com/yrjwcharm/react-native-svga-player>
 
 #### **npm**
 
@@ -29,7 +29,7 @@ npm install rn-newarch-svga-player
 yarn add rn-newarch-svga-player
 ```
 
-> 若想更改库的别名 react-native-svga-player 来导入。你则需要把@yrjwcharm/react-native-svga-player 库修改下，重新 yarn 执行
+> 若想更改库的别名 react-native-svga-player 来导入。你则需要把 rn-newarch-svga-player 库修改下，重新 yarn 执行
 
 ```diff
 +  "dependencies": {
