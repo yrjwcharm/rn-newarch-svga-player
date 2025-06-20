@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
 
 更多详情用法参考 [三端 Svga 动画统一使用点击这里](https://github.com/yrjwcharm/react-native-ohos/tree/feature/rnoh/svgaplayer)
 
-⚠️在ReactNative 0.73<=version<0.77 你可能还需此步骤 在 AppDelegate.mm 重写此组件
+注意⚠️ios 在RN 0.73<=version<0.77 你可能还需此步骤在 AppDelegate.mm 复写此代码
 
 ```diff
 #import "AppDelegate.h"
