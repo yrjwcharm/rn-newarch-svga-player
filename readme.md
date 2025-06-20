@@ -85,23 +85,6 @@ const styles = StyleSheet.create({
 
 更多详情用法参考 [三端 Svga 动画统一使用点击这里](https://github.com/yrjwcharm/react-native-ohos/tree/feature/rnoh/svgaplayer)
 
-注意⚠️ios 在RN 0.73<=version<0.77 你可能还需此步骤在 AppDelegate.mm 复写此代码
-
-```diff
-#import "AppDelegate.h"
-// ...
-#import "RCTSvgaPlayer.h"
-@implementation AppDelegate
-// ...
-+- (NSDictionary<NSString *,Class<RCTComponentViewProtocol>> *)thirdPartyFabricComponents
-+{
-+  NSMutableDictionary * dictionary = [super thirdPartyFabricComponents].mutableCopy;
-+  dictionary[@"CustomWebView"] = [RCTWebView class];
-+  return dictionary;
-+}
-
-@end
-```
 
 #### 开源不易，希望您可以动一动小手点点小 ⭐⭐
 
