@@ -19,7 +19,7 @@
 
 **确保你的 Android/iOS 已经开启了新架构支持 <https://reactnative.cn/docs/0.72/the-new-architecture/use-app-template>**
 
-ios
+ios 需要
 ```bash
  cd ios
  bundle install && bundle exec pod install
