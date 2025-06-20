@@ -1,4 +1,4 @@
-## **这是一款使用 ReactNative 新架构 加载`Android/iOS` Svga 动画的开源插件**
+## ***这是一款使用ReactNative  加载`Android/iOS` Svga动画的播放器插件*** [三端Svga动画统一使用点击这里](https://github.com/yrjwcharm/react-native-ohos/tree/feature/rnoh/svgaplayer)
 
 > ### 版本：latest
 
