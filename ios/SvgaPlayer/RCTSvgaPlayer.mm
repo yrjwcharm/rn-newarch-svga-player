@@ -2,6 +2,7 @@
 
 #import "RCTSvgaPlayer.h"
 
+#import <React/RCTFabricComponentsPlugins.h>
 #import <react/renderer/components/RTNSvgaPlayerSpec/ComponentDescriptors.h>
 #import <react/renderer/components/RTNSvgaPlayerSpec/EventEmitters.h>
 #import <react/renderer/components/RTNSvgaPlayerSpec/Props.h>
@@ -15,24 +16,40 @@ using namespace facebook::react;
 @interface RCTSvgaPlayer()  <RCTSvgaPlayerViewViewProtocol,SVGAPlayerDelegate>
 @end
 
+
 @implementation RCTSvgaPlayer{
-    
   SVGAPlayer *_aPlayer;
   NSString *_currentState;
 }
   
-  -(instancetype)init{
-    if(self = [super init]) {
-      _aPlayer = [[SVGAPlayer alloc] init];
-      _aPlayer.delegate = self;
-      // _aPlayer.loops = 1;
-      // _aPlayer.clearsAfterStop = YES;
-      _aPlayer.clipsToBounds = NO;
-      _aPlayer.contentMode = UIViewContentModeScaleAspectFit;
-      [self addSubview:_aPlayer];
-    }
-    return self;
-  }
+
+//-(instancetype)init{
+//   if(self = [super init]) {
+//     _aPlayer = [[SVGAPlayer alloc] init];
+//     _aPlayer.delegate = self;
+//     // _aPlayer.loops = 1;
+//     // _aPlayer.clearsAfterStop = YES;
+//     _aPlayer.clipsToBounds = NO;
+//     _aPlayer.contentMode = UIViewContentModeScaleAspectFit;
+//     [self addSubview:_aPlayer];
+//   }
+//   return self;
+// }
+ - (instancetype)initWithFrame:(CGRect)frame
+ {
+     if (self = [super initWithFrame:frame]) {
+         static const auto defaultProps = std::make_shared<const SvgaPlayerViewProps>();
+         _props = defaultProps;
+       _aPlayer = [[SVGAPlayer alloc] init];
+       _aPlayer.delegate = self;
+       // _aPlayer.loops = 1;
+       // _aPlayer.clearsAfterStop = YES;
+       _aPlayer.clipsToBounds = NO;
+       _aPlayer.contentMode = UIViewContentModeScaleAspectFit;
+       [self addSubview:_aPlayer];
+     }
+     return self;
+ }
 
 -(void)layoutSubviews
 {
@@ -42,7 +59,8 @@ using namespace facebook::react;
 
 -(void)updateProps:(const facebook::react::Props::Shared &)props oldProps:(const facebook::react::Props::Shared &)oldProps{
   const auto &oldViewProps = *std::static_pointer_cast<SvgaPlayerViewProps const>(_props);
-   const auto &newViewProps = *std::static_pointer_cast<SvgaPlayerViewProps const>(props);
+    const auto &newViewProps = *std::static_pointer_cast<SvgaPlayerViewProps const>(props);
+
   if (oldViewProps.source != newViewProps.source) {
      NSString *urlString = [NSString stringWithCString:newViewProps.source.c_str() encoding:NSUTF8StringEncoding];
     [self loadWithSource:urlString];
@@ -65,8 +83,6 @@ using namespace facebook::react;
            }
   }
   if(newViewProps.toFrame>0){
-    NSLog(@"oldViewProps: %F", oldViewProps.toFrame);
-    NSLog(@"newViewProps: %F", newViewProps.toFrame);
 
     float toFrame = newViewProps.toFrame;
     if (toFrame < 0) {
@@ -179,4 +195,10 @@ using namespace facebook::react;
 }
 
 @end
+
+
+Class<RCTComponentViewProtocol> SvgaPlayerViewCls(void)
+{
+   return RCTSvgaPlayer.class;
+}
 

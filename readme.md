@@ -1,4 +1,4 @@
-## **这是一款使用 ReactNative 加载 Svga 动画的新架构支持开源插件**
+## **这是一款使用 ReactNative 新架构 加载`Android/iOS` Svga 动画的开源插件**
 
 > ### 版本：latest
 
@@ -15,7 +15,9 @@
 
 ## 安装与使用
 
-> [!TIP] 注意 ⚠️ 本库 android/ios 仅给予 Fabric 新架构 支持，旧架构不在跟进，若需旧架构支持请移步<https://github.com/yrjwcharm/react-native-svga-player>
+> [!TIP] 注意 ⚠️ 本库 android/ios 仅给予 Fabric 新架构支持，旧架构不在跟进，若需旧架构支持请移步<https://github.com/yrjwcharm/react-native-svga-player>
+
+**确保你的 Android/iOS 已经开启了新架构支持 <https://reactnative.cn/docs/0.72/the-new-architecture/use-app-template>**
 
 #### **npm**
 
@@ -72,6 +74,8 @@ const styles = StyleSheet.create({
 });
 ```
 
+#### 新架构[Android/iOS]demo 请参考 <https://github.com/yrjwcharm/react-native-ohos/tree/feature/newarch/svgaplayer>
+
 更多详情用法参考 [三端 Svga 动画统一使用点击这里](https://github.com/yrjwcharm/react-native-ohos/tree/feature/rnoh/svgaplayer)
 
 #### 开源不易，希望您可以动一动小手点点小 ⭐⭐
@@ -81,5 +85,3 @@ const styles = StyleSheet.create({
 ## 开源协议
 
 本项目基于 [The MIT License (MIT)](https://github.com/yrjwcharm/react-native-ohos-svgaplayer/blob/master/LICENSE) ，请自由地享受和参与开源。
-
-#### demo 示例请查看 <https://github.com/yrjwcharm/react-native-newarch-support>

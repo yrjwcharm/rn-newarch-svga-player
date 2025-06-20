@@ -18,7 +18,7 @@
     "type": "components"
   },
   "dependencies": {},
-  "description": "这是一款使用ReactNative加载Svga动画的新架构支持开源插件",
+  "description": "这是一款使用ReactNative Fabric新架构加载Svga动画的开源插件",
   "devDependencies": {
     "@types/react": "^18.2.47",
     "react": "18.2.0",
@@ -30,7 +30,7 @@
     "specs",
     "index.tsx",
     "SvgaPlayer.tsx",
-    "react-native-svga-player.podspec",
+    "rn-newarch-svga-player.podspec",
     "RNSvgaPlayer.tsx"
     ],
   "keywords": [
@@ -55,5 +55,5 @@
   "scripts": {
     "codegen-lib": "react-native codegen-lib-harmony --no-safety-check --npm-package-name react-native-ohos-svgaplayer --cpp-output-path ../../harmony/svgaplayer/src/main/cpp/generated --ets-output-path ../../harmony/svgaplayer/src/main/ets/generated --turbo-modules-spec-paths ./src  --arkts-components-spec-paths ./src"
   },
-  "version": "1.0.2"
+  "version": "1.0.7"
 }

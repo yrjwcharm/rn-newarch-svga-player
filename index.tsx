@@ -66,9 +66,9 @@ export default class RNSvgaPlayer extends React.Component<
         toPercentage: -1,
       },
       () => {
-          this.setState({
-            toPercentage,
-          });
+        this.setState({
+          toPercentage,
+        });
       },
     );
   }
