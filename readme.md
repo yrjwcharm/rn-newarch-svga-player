@@ -19,11 +19,6 @@
 
 **确保你的 Android/iOS 已经开启了新架构支持 <https://reactnative.cn/docs/0.72/the-new-architecture/use-app-template>**
 
-ios 需要
-```bash
- cd ios
- bundle install && bundle exec pod install
-```
 
 #### **npm**
 
@@ -35,6 +30,12 @@ npm install rn-newarch-svga-player
 
 ```bash
 yarn add rn-newarch-svga-player
+```
+
+ios 需要
+```bash
+ cd ios
+ bundle install && bundle exec pod install
 ```
 
 > 若想更改库的别名 react-native-svga-player 来导入。你则需要把 rn-newarch-svga-player 库修改下，重新 yarn 执行
