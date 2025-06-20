@@ -32,12 +32,6 @@ npm install rn-newarch-svga-player
 yarn add rn-newarch-svga-player
 ```
 
-ios 需要
-```bash
- cd ios
- bundle install && bundle exec pod install
-```
-
 > 若想更改库的别名 react-native-svga-player 来导入。你则需要把 rn-newarch-svga-player 库修改下，重新 yarn 执行
 
 ```diff
@@ -51,6 +45,12 @@ ios 需要
 +   "react-native-svga-player":"npm:rn-newarch-svga-player@1.0.2",
     "react-native-ohos-svgaplayer": "^1.1.7"
   },
+```
+
+ios 需要
+```bash
+ cd ios
+ bundle install && bundle exec pod install
 ```
 
 下面的代码展示了这个库的基本使用场景：
