@@ -85,6 +85,50 @@ const styles = StyleSheet.create({
 
 更多详情用法参考 [三端 Svga 动画统一使用点击这里](https://github.com/yrjwcharm/react-native-ohos/tree/feature/rnoh/svgaplayer)
 
+⚠️在ReactNative 0.73<=version<0.77 你可能还需此步骤 在 AppDelegate.mm 重写此组件
+
+```diff
+#import "AppDelegate.h"
+#import "RCTSvgaPlayer.h"
+#import <React/RCTBundleURLProvider.h>
+#import <React/RCTBridge+Private.h>
+
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+  self.moduleName = @"Ex";
+  // You can add your custom initial props in the dictionary below.
+  // They will be passed down to the ViewController used by React Native.
+  self.initialProps = @{};
+
+  return [super application:application didFinishLaunchingWithOptions:launchOptions];
+}
++- (NSDictionary<NSString *,Class<RCTComponentViewProtocol>> *)thirdPartyFabricComponents
++{
+  
++  NSMutableDictionary * dictionary = [super thirdPartyFabricComponents].mutableCopy;
++  dictionary[@"SvgaPlayerView"] = [RCTSvgaPlayer class];
++  return dictionary;
++}
+
+
+- (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
+{
+    return [self bundleURL];
+}
+
+- (NSURL *)bundleURL
+{
+#if DEBUG
+     return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
+   #else
+     return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+  #endif
+}
+@end
+```
+
 #### 开源不易，希望您可以动一动小手点点小 ⭐⭐
 
 #### 👴 希望大家如有好的需求踊跃提交,如有问题请提交 issue，空闲时间会扩充与修复优化
