@@ -41,8 +41,8 @@ yarn add rn-newarch-svga-player
     "postinstall-postinstall": "^2.1.0",
     "react": "18.2.0",
     "react-native": "0.72.5",
--    "rn-newarch-svga-player":"^1.0.2"
-+   "react-native-svga-player":"npm:rn-newarch-svga-player@1.0.2",
+-    "rn-newarch-svga-player":"^1.0.7"
++   "react-native-svga-player":"npm:rn-newarch-svga-player@1.0.7",
     "react-native-ohos-svgaplayer": "^1.1.7"
   },
 ```
