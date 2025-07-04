@@ -2,7 +2,7 @@ require "json"
 
 package = JSON.parse(File.read(File.join(__dir__, "package.json")))
 
-folly_version = '2021.07.22.00'
+# folly_version = '2021.07.22.00'
 # folly_compiler_flags = '-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1 -Wno-comma -Wno-shorten-64-to-32'
 
 Pod::Spec.new do |s|
@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.version      = package["version"]
   s.summary      = package["description"]
   s.description  = <<-DESC
-                  这是一款使用ReactNative加载Svga动画的播放器插件 [Android/ios/harmony]三端统一
+                  这是一款使用ReactNative[`Android,`iOS`]加载Svga动画的播放器插件
                    DESC
   s.homepage     = "https://github.com/yrjwcharm/react-native-svga-player"
   s.license      = "MIT"

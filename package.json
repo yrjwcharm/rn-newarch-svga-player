@@ -4,18 +4,17 @@
     "url": "https://github.com/yrjwcharm/react-native-svgaplayer/issues"
   },
   "codegenConfig": {
+    "name": "RNSvgaPlayerSpec",
+    "type": "components",
+    "jsSrcsDir": "./src/specs",
     "android": {
-      "javaPackageName": "com.svgaplayer",
-      "jsSrcsDir":"specs"
+      "javaPackageName": "com.svgaplayer"
     },
     "ios": {
       "componentProvider": {
-        "SvgaPlayerView": "RCTSvgaPlayer"
+        "RNSvgaPlayer": "RCTSvgaPlayer"
       }
-    },
-    "jsSrcsDir": "specs",
-    "name": "RTNSvgaPlayerSpec",
-    "type": "components"
+    }
   },
   "dependencies": {},
   "description": "这是一款使用ReactNative Fabric新架构加载Svga动画的开源插件",
@@ -27,11 +26,8 @@
   "files": [
     "android",
     "ios",
-    "specs",
-    "index.tsx",
-    "SvgaPlayer.tsx",
-    "rn-newarch-svga-player.podspec",
-    "RNSvgaPlayer.tsx"
+    "src",
+    "rn-newarch-svga-player.podspec"
     ],
   "keywords": [
     "fabric",
@@ -55,5 +51,5 @@
   "scripts": {
     "codegen-lib": "react-native codegen-lib-harmony --no-safety-check --npm-package-name react-native-ohos-svgaplayer --cpp-output-path ../../harmony/svgaplayer/src/main/cpp/generated --ets-output-path ../../harmony/svgaplayer/src/main/ets/generated --turbo-modules-spec-paths ./src  --arkts-components-spec-paths ./src"
   },
-  "version": "1.0.9"
+  "version": "1.1.0"
 }
