@@ -40,8 +40,8 @@ yarn add rn-newarch-svga-player
     "postinstall-postinstall": "^2.1.0",
     "react": "18.2.0",
     "react-native": "0.72.5",
--    "rn-newarch-svga-player":"^1.0.9"
-+   "react-native-svga-player":"npm:rn-newarch-svga-player@1.0.9",
+-    "rn-newarch-svga-player":"^1.1.0"
++   "react-native-svga-player":"npm:rn-newarch-svga-player@1.1.0",
     "react-native-ohos-svgaplayer": "^1.1.7"
   },
 ```
@@ -63,6 +63,7 @@ import RNSvgaPlayer from "react-native-svga-player";
 export function App() {
   return (
     <RNSvgaPlayer
+      loops={0}
       source="https://raw.githubusercontent.com/yyued/SVGAPlayer-iOS/master/SVGAPlayer/Samples/Goddess.svga"
       style={{
         width: 300,

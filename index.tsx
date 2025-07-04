@@ -9,6 +9,7 @@ interface SVGAPlayerProps extends ViewProps {
   onFrame?: (value: number) => void;
   onPercentage?: (value: number) => void;
   source: string;
+  loops?: number;
 }
 interface SVGAPlayerState {
   toFrame: number;
@@ -66,9 +67,9 @@ export default class RNSvgaPlayer extends React.Component<
         toPercentage: -1,
       },
       () => {
-        this.setState({
-          toPercentage,
-        });
+          this.setState({
+            toPercentage,
+          });
       },
     );
   }

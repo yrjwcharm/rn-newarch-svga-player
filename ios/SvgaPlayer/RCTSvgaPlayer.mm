@@ -64,7 +64,8 @@ using namespace facebook::react;
   if (oldViewProps.source != newViewProps.source) {
      NSString *urlString = [NSString stringWithCString:newViewProps.source.c_str() encoding:NSUTF8StringEncoding];
     [self loadWithSource:urlString];
-  }else if(oldViewProps.currentState!=newViewProps.currentState){
+  }
+  if(oldViewProps.currentState!=newViewProps.currentState){
     NSString *currentState = [NSString stringWithCString:newViewProps.currentState.c_str() encoding:NSUTF8StringEncoding];
     _currentState = currentState;
     
@@ -82,6 +83,10 @@ using namespace facebook::react;
                [_aPlayer clear];
            }
   }
+  if(oldViewProps.loops!=newViewProps.loops){
+    _aPlayer.loops = newViewProps.loops;
+  }
+    
   if(newViewProps.toFrame>0){
 
     float toFrame = newViewProps.toFrame;
@@ -134,6 +139,7 @@ using namespace facebook::react;
   
   - (void)pauseAnimation {
     [_aPlayer pauseAnimation];
+    
   }
   
   - (void)startAnimation {
@@ -176,6 +182,10 @@ using namespace facebook::react;
  }
 }
 
+-(void)prepareForRecycle{
+  [super prepareForRecycle];
+
+}
 - (void)svgaPlayerDidAnimatedToFrame:(NSInteger)frame {
 //    if (_aPlayer) {
 //      NSLog(@"frame获取值....%ld",frame);
@@ -198,6 +208,34 @@ using namespace facebook::react;
   std::dynamic_pointer_cast<const SvgaPlayerViewEventEmitter>(_eventEmitter)
   ->onPercentage(SvgaPlayerViewEventEmitter::OnPercentage{.value=(float)percentage});
  }
+}
+// 当视图从父视图移除时调用
+- (void)removeFromSuperview
+{
+    // 从父视图移除时清理资源
+    [self clean];
+    [super removeFromSuperview];
+}
+
+- (void)willMoveToSuperview:(UIView *)newSuperview
+{
+    if (newSuperview == nil) {
+        [self clean];
+    }
+    [super willMoveToSuperview:newSuperview];
+}
+- (void)clean
+{
+    if (_aPlayer) {
+        [_aPlayer stopAnimation];
+        [_aPlayer setVideoItem:nil];
+        [_aPlayer clear];
+    }
+}
+- (void)dealloc {
+    [self clean];
+    _aPlayer.delegate = nil;
+    _aPlayer = nil;
 }
 
 @end

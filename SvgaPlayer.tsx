@@ -14,6 +14,7 @@ export type GeneratedSampleComponentRef = {
 interface ISvgaPlayerProps {
   style?: StyleProp<ViewStyle>;
   source: string;
+  loops?: number;
   toFrame: number;
   currentState: string;
   toPercentage: number;
@@ -101,6 +102,7 @@ export const SvgaPlayer = forwardRef<
       ref={svgaPlayerRef}
       source={props.source}
       toFrame={props.toFrame}
+      loops={props.loops}
       currentState={props.currentState}
       toPercentage={props.toPercentage}
       onFinished={() => {
