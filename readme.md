@@ -1,4 +1,4 @@
-## ***这是一款使用ReactNative  加载`Android/iOS` Svga动画的播放器插件*** [三端Svga动画统一使用点击这里](https://github.com/yrjwcharm/react-native-ohos/tree/feature/rnoh/svgaplayer)
+## **_这是一款使用 ReactNative 加载`Android/iOS` Svga 动画的播放器插件_** [三端 Svga 动画统一使用点击这里](https://github.com/yrjwcharm/react-native-ohos/tree/feature/rnoh/svgaplayer)
 
 > ### 版本：latest
 
@@ -18,7 +18,6 @@
 > [!TIP] 注意 ⚠️ 本库 android/ios 仅给予 Fabric 新架构支持，旧架构不在跟进，若需旧架构支持请移步<https://github.com/yrjwcharm/react-native-svga-player>
 
 **确保你的 Android/iOS 已经开启了新架构支持 <https://reactnative.cn/docs/0.72/the-new-architecture/use-app-template>**
-
 
 #### **npm**
 
@@ -41,13 +40,14 @@ yarn add rn-newarch-svga-player
     "postinstall-postinstall": "^2.1.0",
     "react": "18.2.0",
     "react-native": "0.72.5",
--    "rn-newarch-svga-player":"^1.0.7"
-+   "react-native-svga-player":"npm:rn-newarch-svga-player@1.0.7",
+-    "rn-newarch-svga-player":"^1.0.9"
++   "react-native-svga-player":"npm:rn-newarch-svga-player@1.0.9",
     "react-native-ohos-svgaplayer": "^1.1.7"
   },
 ```
 
 ios 需要
+
 ```bash
  cd ios
  bundle install && bundle exec pod install
@@ -84,7 +84,6 @@ const styles = StyleSheet.create({
 #### 新架构[Android/iOS]demo 请参考 <https://github.com/yrjwcharm/react-native-ohos/tree/feature/newarch/svgaplayer>
 
 更多详情用法参考 [三端 Svga 动画统一使用点击这里](https://github.com/yrjwcharm/react-native-ohos/tree/feature/rnoh/svgaplayer)
-
 
 #### 开源不易，希望您可以动一动小手点点小 ⭐⭐
 

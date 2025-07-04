@@ -170,8 +170,10 @@ using namespace facebook::react;
 //      SvgaPlayerViewEventEmitter::OnFinished result = SvgaPlayerViewEventEmitter::OnFinished{SvgaPlayerViewEventEmitter::OnFinished()};
 //      self.eventEmitter.onFinished((result));
 //    }
+ if (_eventEmitter != nullptr) {
   std::dynamic_pointer_cast<const SvgaPlayerViewEventEmitter>(_eventEmitter)
   ->onFinished(SvgaPlayerViewEventEmitter::OnFinished{});
+ }
 }
 
 - (void)svgaPlayerDidAnimatedToFrame:(NSInteger)frame {
@@ -180,8 +182,10 @@ using namespace facebook::react;
 //      SvgaPlayerViewEventEmitter::OnFrame result = SvgaPlayerViewEventEmitter::OnFrame{SvgaPlayerViewEventEmitter::OnFrame( frame )};
 //        self.eventEmitter.onFrame(result);
 //    }
+ if (_eventEmitter != nullptr) {
   std::dynamic_pointer_cast<const SvgaPlayerViewEventEmitter>(_eventEmitter)
   ->onFrame(SvgaPlayerViewEventEmitter::OnFrame{.value=(float)frame});
+ }
 }
 
 - (void)svgaPlayerDidAnimatedToPercentage:(CGFloat)percentage {
@@ -190,8 +194,10 @@ using namespace facebook::react;
 //        self.eventEmitter.onPercentage(result);
 //
 //    }
+ if (_eventEmitter != nullptr) {
   std::dynamic_pointer_cast<const SvgaPlayerViewEventEmitter>(_eventEmitter)
   ->onPercentage(SvgaPlayerViewEventEmitter::OnPercentage{.value=(float)percentage});
+ }
 }
 
 @end
