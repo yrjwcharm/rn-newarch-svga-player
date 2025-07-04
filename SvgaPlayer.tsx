@@ -1,118 +1,100 @@
-import React, {useRef, forwardRef} from 'react';
-import SvgaPlayerView, {
-  SvgaPlayerProps,
-} from './specs/SvgaPlayerNativeComponent';
-export type GeneratedSampleComponentRef = {
-  load: (source: string) => void;
-  startAnimation: () => void;
-  pauseAnimation: () => void;
-  stopAnimation: () => void;
-  // stepToFrame: (toFrame: number, andPlay: boolean) => void;
-  // stepToPercentage: (toPercentage: number, andPlay: boolean) => void;
-};
+import React, { forwardRef, useImperativeHandle, useRef } from 'react';
+import type { ViewProps } from 'react-native';
+import RNSvgaPlayerNative, {
+  Commands,
+  type ComponentType,
+} from './src/specs/SvgaPlayerNativeComponent';
 
-interface ISvgaPlayerProps {
-  style?: StyleProp<ViewStyle>;
-  source: string;
-  toFrame: number;
-  currentState: string;
-  toPercentage: number;
-  onFinished?: () => void;
-  onFrame?: (value: number) => void;
-  onPercentage?: (value: number) => void;
+export interface SvgaErrorEvent {
+  error: string;
 }
-import {
-  findNodeHandle,
-  HostComponent,
-  StyleProp,
-  UIManager,
-  ViewStyle,
-} from 'react-native';
-export const SvgaPlayer = forwardRef<
-  GeneratedSampleComponentRef,
-  ISvgaPlayerProps
->((props, ref) => {
-  const svgaPlayerRef = useRef<React.ComponentRef<
-    HostComponent<SvgaPlayerProps>
-  > | null>(null);
-  React.useImperativeHandle(
-    ref,
-    () => ({
-      load(source: string) {
-        if (svgaPlayerRef?.current) {
-          UIManager.dispatchViewManagerCommand(
-            findNodeHandle(svgaPlayerRef.current),
-            'load',
-            [source],
-          );
+
+export interface SvgaPlayerProps extends ViewProps {
+  source?: string;
+  /**
+   * 是否自动播放，默认 true
+   */
+  autoPlay?: boolean;
+  /**
+   * 循环播放次数，默认 0（无限循环）
+   */
+  loops?: number;
+  /**
+   * 动画停止后是否清空画布，默认 true
+   */
+  clearsAfterStop?: boolean;
+  /**
+   * 内容对齐方式
+   */
+  align?: 'top' | 'bottom' | 'center';
+
+  // 事件回调
+  onError?: (event: SvgaErrorEvent) => void;
+  onFinished?: () => void;
+  onLoaded?: () => void;
+}
+
+export interface SvgaPlayerRef {
+  /**
+   * 从第0帧开始播放动画
+   */
+  startAnimation: () => void;
+  /**
+   * 停止动画，如果 clearsAfterStop 为 true 则清空画布
+   */
+  stopAnimation: () => void;
+}
+
+const RNSvgaPlayer = forwardRef<SvgaPlayerRef, SvgaPlayerProps>(
+  (
+    {
+      autoPlay = true,
+      loops = 0,
+      clearsAfterStop = false,
+      source,
+      onError,
+      onFinished,
+      onLoaded,
+      ...restProps
+    },
+    ref
+  ) => {
+    const nativeRef = useRef<React.ElementRef<ComponentType>>(null);
+
+    useImperativeHandle(ref, () => ({
+      startAnimation: () => {
+        if (nativeRef.current) {
+          Commands.startAnimation(nativeRef.current);
         }
       },
-      startAnimation() {
-        if (svgaPlayerRef?.current) {
-          UIManager.dispatchViewManagerCommand(
-            findNodeHandle(svgaPlayerRef.current),
-            'startAnimation',
-            [],
-          );
+      stopAnimation: () => {
+        if (nativeRef.current) {
+          Commands.stopAnimation(nativeRef.current);
         }
       },
-      pauseAnimation() {
-        if (svgaPlayerRef?.current) {
-          UIManager.dispatchViewManagerCommand(
-            findNodeHandle(svgaPlayerRef.current),
-            'pauseAnimation',
-            [],
-          );
-        }
-      },
-      stopAnimation() {
-        if (svgaPlayerRef?.current) {
-          UIManager.dispatchViewManagerCommand(
-            findNodeHandle(svgaPlayerRef.current),
-            'stopAnimation',
-            [],
-          );
-        }
-      },
-      // stepToFrame(toFrame: number, andPlay: boolean) {
-      //   if (svgaPlayerRef?.current) {
-      //     UIManager.dispatchViewManagerCommand(
-      //       findNodeHandle(svgaPlayerRef.current),
-      //       'stepToFrame',
-      //       [toFrame, andPlay],
-      //     );
+      // pauseAnimation: () => {
+      //   if (nativeRef.current) {
+      //     Commands.pauseAnimation(nativeRef.current);
       //   }
       // },
-      // stepToPercentage(toPercentage: number, andPlay: boolean) {
-      //   if (svgaPlayerRef?.current) {
-      //     UIManager.dispatchViewManagerCommand(
-      //       findNodeHandle(svgaPlayerRef.current),
-      //       'stepToPercentage',
-      //       [toPercentage, andPlay],
-      //     );
-      //   }
-      // },
-    }),
-    [],
-  );
-  return (
-    <SvgaPlayerView
-      style={props.style}
-      ref={svgaPlayerRef}
-      source={props.source}
-      toFrame={props.toFrame}
-      currentState={props.currentState}
-      toPercentage={props.toPercentage}
-      onFinished={() => {
-        props.onFinished && props.onFinished();
-      }}
-      onFrame={e => {
-        props.onFrame && props.onFrame(e.nativeEvent.value);
-      }}
-      onPercentage={e => {
-        props.onPercentage && props.onPercentage(e.nativeEvent.value);
-      }}
-    />
-  );
-});
-export default SvgaPlayer;
+    }));
+
+    return (
+      <RNSvgaPlayerNative
+        ref={nativeRef}
+        source={source}
+        autoPlay={autoPlay}
+        loops={loops}
+        clearsAfterStop={clearsAfterStop}
+        onError={(error) => onError?.(error.nativeEvent)}
+        onFinished={onFinished}
+        onLoaded={onLoaded}
+        {...restProps}
+      />
+    );
+  }
+);
+
+RNSvgaPlayer.displayName = 'RNSvgaPlayer';
+
+export default RNSvgaPlayer;
