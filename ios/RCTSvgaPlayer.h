@@ -7,11 +7,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RCTSvgaPlayer : RCTViewComponentView <SVGAPlayerDelegate>
-
-// Commands
-- (void)startAnimation;
-- (void)stopAnimation;
+@interface RCTSvgaPlayer : RCTViewComponentView 
 
 @end
 
