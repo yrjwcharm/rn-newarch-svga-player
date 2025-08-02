@@ -41,8 +41,7 @@ yarn add rn-newarch-svga-player
     "react": "18.2.0",
     "react-native": "0.72.5",
 -    "rn-newarch-svga-player":"^1.1.2"
-+   "react-native-svga-player":"npm:rn-newarch-svga-player@1.1.2",
-    "react-native-ohos-svgaplayer": "^1.1.7"
++   "react-native-svga-player":"npm:rn-newarch-svga-player@1.1.2"
   },
 ```
 android 需要
