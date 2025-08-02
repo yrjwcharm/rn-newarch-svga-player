@@ -11,6 +11,9 @@ import com.facebook.react.uimanager.events.EventDispatcher
 import com.opensource.svgaplayer.SVGACallback
 import com.opensource.svgaplayer.SVGAImageView
 import com.svgaplayer.events.TopFinishedEvent
+import com.svgaplayer.events.TopFrameEvent
+import com.svgaplayer.events.TopLoadedEvent
+import com.svgaplayer.events.TopPercentageEvent
 
 class RNSvgaPlayer(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : SVGAImageView(context, attrs, defStyleAttr) {
 
@@ -23,6 +26,16 @@ class RNSvgaPlayer(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : 
       override fun onStep(frame: Int, percentage: Double) {
          // 动画开始播放，清除启动标记
          isStarting = false
+        val frameArguments = Arguments.createMap()
+        val percentageArguments = Arguments.createMap()
+        frameArguments.putDouble("value",frame.toDouble());
+        percentageArguments.putDouble("value", percentage);
+        val surfaceId = UIManagerHelper.getSurfaceId(context)
+        val framedEvent = TopFrameEvent(surfaceId, id, frameArguments)
+        var percentageEvent = TopPercentageEvent(surfaceId,id,percentageArguments);
+        val dispatcher = UIManagerHelper.getEventDispatcherForReactTag(context as ThemedReactContext, id)
+        dispatcher?.dispatchEvent(framedEvent)
+        dispatcher?.dispatchEvent(percentageEvent);
       }
 
       override fun onRepeat() {

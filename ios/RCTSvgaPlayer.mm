@@ -1,5 +1,4 @@
 #import "RCTSvgaPlayer.h"
-
 #import <react/renderer/components/RNSvgaPlayerSpec/ComponentDescriptors.h>
 #import <react/renderer/components/RNSvgaPlayerSpec/EventEmitters.h>
 #import <react/renderer/components/RNSvgaPlayerSpec/Props.h>
@@ -16,6 +15,7 @@ using namespace facebook::react;
 
 @end
 
+
 @implementation RCTSvgaPlayer {
     SVGAPlayer * _svgaPlayer;
     NSString * _currentSource;
@@ -25,11 +25,20 @@ using namespace facebook::react;
     SVGAVideoEntity * _currentVideoItem;
 }
 
+// Event emitter convenience method
+- (const RNSvgaPlayerEventEmitter &)eventEmitter
+{
+  return static_cast<const RNSvgaPlayerEventEmitter &>(*_eventEmitter);
+}
+
 + (ComponentDescriptorProvider)componentDescriptorProvider
 {
     return concreteComponentDescriptorProvider<RNSvgaPlayerComponentDescriptor>();
 }
-
+Class<RCTComponentViewProtocol> RNSvgaPlayerCls(void)
+{
+  return RCTSvgaPlayer.class;
+}
 - (instancetype)initWithFrame:(CGRect)frame
 {
   if (self = [super initWithFrame:frame]) {
@@ -104,12 +113,6 @@ using namespace facebook::react;
 
     [super updateProps:props oldProps:oldProps];
 }
-
-Class<RCTComponentViewProtocol> SvgaPlayerViewCls(void)
-{
-    return RCTSvgaPlayer.class;
-}
-
 // 辅助方法：根据 align 属性设置 contentMode
 - (void)updateContentModeWithAlign:(RNSvgaPlayerAlign)align
 {
@@ -135,20 +138,30 @@ Class<RCTComponentViewProtocol> SvgaPlayerViewCls(void)
     [_svgaPlayer setVideoItem:nil];
     [_svgaPlayer clear];
     _currentVideoItem = nil;
-
-    if (_eventEmitter != nullptr) {
-        std::dynamic_pointer_cast<const facebook::react::RNSvgaPlayerEventEmitter>(_eventEmitter)
-            ->onError(facebook::react::RNSvgaPlayerEventEmitter::OnError{
-                .error = std::string([errorMessage UTF8String])
-            });
+    
+    if(_eventEmitter!= nullptr) {
+        RNSvgaPlayerEventEmitter::OnError result = RNSvgaPlayerEventEmitter::OnError{RNSvgaPlayerEventEmitter::OnError( [errorMessage UTF8String] )};
+        self.eventEmitter.onError(result);
     }
+
+//    if (_eventEmitter != nullptr) {
+//        std::dynamic_pointer_cast<const facebook::react::RNSvgaPlayerEventEmitter>(_eventEmitter)
+//            ->onError(facebook::react::RNSvgaPlayerEventEmitter::OnError{
+//                .error = std::string([errorMessage UTF8String])
+//            });
+//    }
 }
 
 - (void)sendLoadedEvent
 {
-    if (_eventEmitter != nullptr) {
-        std::dynamic_pointer_cast<const facebook::react::RNSvgaPlayerEventEmitter>(_eventEmitter)
-            ->onLoaded(facebook::react::RNSvgaPlayerEventEmitter::OnLoaded{});
+//    if (_eventEmitter != nullptr) {
+//        std::dynamic_pointer_cast<const facebook::react::RNSvgaPlayerEventEmitter>(_eventEmitter)
+//            ->onLoaded(facebook::react::RNSvgaPlayerEventEmitter::OnLoaded{});
+//
+//    }
+    if(_eventEmitter != nullptr) {
+        RNSvgaPlayerEventEmitter::OnLoaded result = RNSvgaPlayerEventEmitter::OnLoaded{RNSvgaPlayerEventEmitter::OnLoaded( {} )};
+        self.eventEmitter.onLoaded(result);
     }
 }
 
@@ -372,7 +385,34 @@ Class<RCTComponentViewProtocol> SvgaPlayerViewCls(void)
 {
     [_svgaPlayer stopAnimation];
 }
-
+- (void)pauseAnimation {
+   [_svgaPlayer pauseAnimation];
+ }
+-(void)stepToFrame:(NSInteger)frame andPlay:(BOOL)play {
+    if (frame < 0 || !_svgaPlayer || _svgaPlayer.delegate != self) {
+        return;
+    }
+    [_svgaPlayer stepToFrame:frame andPlay:play];
+}
+-(void)stepToPercentage:(NSInteger)percentage andPlay:(BOOL)play {
+    if (percentage < 0 || !_svgaPlayer || _svgaPlayer.delegate != self) {
+        return;
+    }
+    [_svgaPlayer stepToPercentage:percentage andPlay:play];
+}
+-(void)startAnimationWithRange:(NSInteger)location length:(NSInteger)length reverse:(BOOL)reverse{
+    if (!_svgaPlayer || _svgaPlayer.delegate != self) {
+            return;
+        }
+        
+        // 检查 location 和 length 的有效性
+        if (location < 0 || length <= 0) {
+            return;
+        }
+        // 设置动画范围
+        [_svgaPlayer startAnimationWithRange:NSMakeRange(location, length) reverse:reverse];
+}
+ 
 // 处理来自 JavaScript 的命令调用
 - (void)handleCommand:(const NSString *)commandName args:(const NSArray *)args
 {
@@ -380,7 +420,49 @@ Class<RCTComponentViewProtocol> SvgaPlayerViewCls(void)
         [self startAnimation];
     } else if ([commandName isEqualToString:@"stopAnimation"]) {
         [self stopAnimation];
+    }else if ([commandName isEqualToString:@"pauseAnimation"]) {
+        [self pauseAnimation];
+    }else if([commandName isEqualToString:@"stepToFrame"]){
+        [self stepToFrame:[args[0] integerValue] andPlay:[args[1] boolValue]];
+       
+    }else if([commandName isEqualToString:@"stepToPercentage"]){
+        [self stepToPercentage:[args[0] integerValue] andPlay:[args[1] boolValue]];
+        
+    }else if([commandName isEqualToString:@"startAnimationWithRange"]){
+        // 处理 startAnimationWithRange 命令
+       [self startAnimationWithRange:[args[0] integerValue]
+                                length:[args[1] integerValue]
+                                 reverse:[args[2] boolValue]];
     }
+        
+}
+-(void) svgaPlayerDidAnimatedToFrame:(NSInteger)frame{
+    if (!_svgaPlayer || _svgaPlayer.delegate != self) {
+        return;
+    }
+    if(_eventEmitter!= nullptr) {
+        
+        RNSvgaPlayerEventEmitter::OnFrameChanged result = RNSvgaPlayerEventEmitter::OnFrameChanged{RNSvgaPlayerEventEmitter::OnFrameChanged( frame )};
+        self.eventEmitter.onFrameChanged(result);
+    }
+//    std::dynamic_pointer_cast<const RNSvgaPlayerEventEmitter>(_eventEmitter)
+//    ->onFrameChanged(RNSvgaPlayerEventEmitter::OnFrameChanged{.value=(float)frame});
+        
+    
+}
+-(void) svgaPlayerDidAnimatedToPercentage:(CGFloat)percentage{
+    // 检查播放器是否还有效
+    if (!_svgaPlayer || _svgaPlayer.delegate != self) {
+        return;
+    }
+    if(_eventEmitter != nullptr) {
+        
+        RNSvgaPlayerEventEmitter::OnPercentageChanged result = RNSvgaPlayerEventEmitter::OnPercentageChanged{RNSvgaPlayerEventEmitter::OnPercentageChanged( percentage )};
+        self.eventEmitter.onPercentageChanged(result);
+    }
+    //直接事件
+//    std::dynamic_pointer_cast<const RNSvgaPlayerEventEmitter>(_eventEmitter)
+//    ->onFrameChanged(RNSvgaPlayerEventEmitter::OnFrameChanged{.value=(float)percentage});
 }
 
 // SVGAPlayerDelegate methods
@@ -390,16 +472,16 @@ Class<RCTComponentViewProtocol> SvgaPlayerViewCls(void)
     if (!_svgaPlayer || player != _svgaPlayer) {
         return;
     }
-
-    // 检查事件发送器是否还有效
-    if (_eventEmitter == nullptr) {
-        return;
+    if(_eventEmitter != nullptr) {
+        
+        // 检查事件发送器是否还有效
+        RNSvgaPlayerEventEmitter::OnFinished result = RNSvgaPlayerEventEmitter::OnFinished{RNSvgaPlayerEventEmitter::OnFinished( true )};
+        self.eventEmitter.onFinished(result);
     }
-
-    std::dynamic_pointer_cast<const facebook::react::RNSvgaPlayerEventEmitter>(_eventEmitter)
-        ->onFinished(facebook::react::RNSvgaPlayerEventEmitter::OnFinished{
-            .finished = true
-        });
+//    std::dynamic_pointer_cast<const facebook::react::RNSvgaPlayerEventEmitter>(_eventEmitter)
+//        ->onFinished(facebook::react::RNSvgaPlayerEventEmitter::OnFinished{
+//            .finished = true
+//        });
 }
 
 // React Native Fabric 生命周期方法
@@ -481,4 +563,8 @@ Class<RCTComponentViewProtocol> SvgaPlayerViewCls(void)
     _currentSource = nil;
 }
 
+
+
 @end
+
+
