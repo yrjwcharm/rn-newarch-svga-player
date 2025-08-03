@@ -4,7 +4,6 @@ import android.util.Log
 import android.widget.ImageView
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.ReadableArray
-import com.facebook.react.common.MapBuilder
 import com.facebook.react.module.annotations.ReactModule
 import com.facebook.react.uimanager.SimpleViewManager
 import com.facebook.react.uimanager.ThemedReactContext
@@ -158,29 +157,51 @@ class RNSvgaPlayerManager() : SimpleViewManager<RNSvgaPlayer>(), RNSvgaPlayerMan
     view.stopAnimation(view.clearsAfterStop)
   }
 
-//  override fun getExportedCustomBubblingEventTypeConstants(): Map<String, Any>? {
+//  override fun getExportedCustomDirectEventTypeConstants(): MutableMap<String, Any>? {
 //    val export = super.getExportedCustomDirectEventTypeConstants()?.toMutableMap()
 //      ?: mutableMapOf<String, Any>()
-//
 //    export[TopErrorEvent.EVENT_NAME] = mapOf("registrationName" to "onError")
 //    export[TopFinishedEvent.EVENT_NAME] = mapOf("registrationName" to "onFinished")
 //    export[TopLoadedEvent.EVENT_NAME] = mapOf("registrationName" to "onLoaded")
 //    export[TopFrameEvent.EVENT_NAME] = mapOf("registrationName" to "onFrameChanged")
 //    export[TopPercentageEvent.EVENT_NAME] = mapOf("registrationName" to "onPercentageChanged")
-//
 //    return export
 //  }
-  override fun getExportedCustomBubblingEventTypeConstants(): MutableMap<String, Any>? {
-  val map = MapBuilder.builder<String, Any>()
-    .put("topError", MapBuilder.of("registrationName", "onError"))
-    .put("topFinished", MapBuilder.of("registrationName", "onFinished"))
-    .put("topLoaded", MapBuilder.of("registrationName", "onLoaded"))
-    .put("topFrameChanged", MapBuilder.of("registrationName", "onFrameChanged"))
-    .put("topPercentageChanged", MapBuilder.of("registrationName", "onPercentageChanged"))
-    .build()
-  return map
+override fun getExportedCustomBubblingEventTypeConstants(): MutableMap<String, Any> {
+  val map: MutableMap<String, Any> = HashMap()
+  map["onError"] = createBubblingEventConfig(
+    bubbledName = "onError",
+    capturedName = "onErrorCapture"
+  )
+  map["onFinished"] = createBubblingEventConfig(
+    bubbledName = "onFinished",
+    capturedName = "onFinishedCapture"
+  )
+  map["onLoaded"] = createBubblingEventConfig(
+    bubbledName = "onLoaded",
+    capturedName = "onLoadedCapture"
+  )
+  map["onFrameChanged"] = createBubblingEventConfig(
+    bubbledName = "onFrameChanged",
+    capturedName = "onFrameChangedCapture"
+  )
+  map["onPercentageChanged"] = createBubblingEventConfig(
+    bubbledName = "onPercentageChanged",
+    capturedName = "onPercentageChangedCapture"
+  )
+  return map;
+}
+  private fun createBubblingEventConfig(
+    bubbledName: String,
+    capturedName: String
+  ): Map<String, Any> {
+    return mapOf(
+      "phasedRegistrationNames" to mapOf(
+        "bubbled" to bubbledName,
+        "captured" to capturedName
+      )
+    )
   }
-
   override fun pauseAnimation(view: RNSvgaPlayer?) {
     view?.pauseAnimation()
   }
