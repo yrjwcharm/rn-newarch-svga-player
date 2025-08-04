@@ -57,7 +57,7 @@ ios 需要
   bundle install && bundle exec pod install
 ```
 
-### ios react-native 0.76 以上 AppDelegate.mm 需要显示注册该组件
+### react-native 0.76 以上 iOS AppDelegate.mm 需要显示注册该组件
 
 ```diff
 #import "AppDelegate.h"
